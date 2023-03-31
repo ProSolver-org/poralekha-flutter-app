@@ -29,14 +29,10 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   bloc: ^8.1.1
-  bloc_test: ^9.1.1
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.2
-  integration_test_tizen: ^2.0.1
-  mocktail: ^0.3.0
-  very_good_analysis: ^4.0.0+1
 
 dev_dependencies:
   flutter_lints: ^2.0.0
