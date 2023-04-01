@@ -74,7 +74,7 @@ class PoralekhaScreenState extends State<PoralekhaScreen> {
               ),
             );
           }
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         });
