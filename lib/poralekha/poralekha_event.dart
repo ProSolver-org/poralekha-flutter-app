@@ -1,74 +1,35 @@
 import 'dart:async';
-
-import 'package:flutter/widgets.dart';
-import 'package:ff_bloc/ff_bloc.dart';
+import 'dart:developer' as developer;
 
 import 'package:poralekha_flutter_app/poralekha/index.dart';
+import 'package:meta/meta.dart';
 
 @immutable
-abstract class PoralekhaEvent
-    implements FFBlocEvent<PoralekhaState, PoralekhaBloc> {}
+abstract class PoralekhaEvent {
+  Stream<PoralekhaState> applyAsync(
+      {PoralekhaState currentState, PoralekhaBloc bloc});
+}
+
+class UnPoralekhaEvent extends PoralekhaEvent {
+  @override
+  Stream<PoralekhaState> applyAsync(
+      {PoralekhaState? currentState, PoralekhaBloc? bloc}) async* {
+    yield UnPoralekhaState();
+  }
+}
 
 class LoadPoralekhaEvent extends PoralekhaEvent {
-  LoadPoralekhaEvent({required this.id});
-  final String? id;
-
-  static const String _name = 'LoadPoralekhaEvent';
-
   @override
-  String toString() => _name;
-
-  @override
-  Stream<PoralekhaState> applyAsync({required PoralekhaBloc bloc}) async* {
-    yield bloc.state.copyWithoutError(isLoading: true);
-    final result = await bloc.provider.fetchAsync(id);
-    yield bloc.state.copyWithoutError(
-      isLoading: false,
-      data: PoralekhaViewModel(items: result),
-    );
-  }
-}
-
-class AddPoralekhaEvent extends PoralekhaEvent {
-  static const String _name = 'AddPoralekhaEvent';
-
-  @override
-  String toString() => _name;
-
-  @override
-  Stream<PoralekhaState> applyAsync({required PoralekhaBloc bloc}) async* {
-    yield bloc.state.copyWithoutError(isLoading: true);
-    final result = await bloc.provider.addMore(bloc.state.data?.items);
-    yield bloc.state.copyWithoutError(
-      isLoading: false,
-      data: PoralekhaViewModel(items: result),
-    );
-  }
-}
-
-class ErrorPoralekhaEvent extends PoralekhaEvent {
-  static const String _name = 'ErrorYouAwesomeEvent';
-
-  @override
-  String toString() => _name;
-
-  @override
-  Stream<PoralekhaState> applyAsync({required PoralekhaBloc bloc}) async* {
-    throw Exception('Test error');
-  }
-}
-
-class ClearPoralekhaEvent extends PoralekhaEvent {
-  static const String _name = 'ClearPoralekhaEvent';
-
-  @override
-  String toString() => _name;
-
-  @override
-  Stream<PoralekhaState> applyAsync({required PoralekhaBloc bloc}) async* {
-    yield bloc.state.copyWithoutError(isLoading: true);
-    yield bloc.state.copyWithoutData(
-      isLoading: false,
-    );
+  Stream<PoralekhaState> applyAsync(
+      {PoralekhaState? currentState, PoralekhaBloc? bloc}) async* {
+    try {
+      yield UnPoralekhaState();
+      await Future.delayed(const Duration(seconds: 1));
+      yield InPoralekhaState('Hello world');
+    } catch (_, stackTrace) {
+      developer.log('$_',
+          name: 'LoadPoralekhaEvent', error: _, stackTrace: stackTrace);
+      yield ErrorPoralekhaState(_.toString());
+    }
   }
 }

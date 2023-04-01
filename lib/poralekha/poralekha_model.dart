@@ -1,51 +1,13 @@
-// ignore: depend_on_referenced_packages
 import 'package:equatable/equatable.dart';
 
+/// use https://marketplace.visualstudio.com/items?itemName=BendixMa.dart-data-class-generator
 class PoralekhaModel extends Equatable {
-  const PoralekhaModel({
-    required this.name,
-  });
+  final int id;
   final String name;
 
-  @override
-  List<Object> get props => [ name];
-
-  Map<dynamic, dynamic> toMap() {
-    return {
-      'name': name,
-    };
-  }
-
-  static PoralekhaModel? fromMap(Map<dynamic, dynamic>? map) {
-    if (map == null) {
-      return null;
-    }
-
-    return PoralekhaModel(
-      name: map['name']!.toString(),
-    );
-  }
-
-}
-
-class PoralekhaViewModel extends Equatable {
-  const PoralekhaViewModel({
-    // TODO(all): add all required constructor parameters
-    required this.items,
-  });
-
-  // TODO(all): declare your fields here
-  final List<PoralekhaModel>? items;
+  PoralekhaModel(this.id, this.name);
 
   @override
-  List<Object?> get props => [items /*TODO(all): List all fields here*/];
+  List<Object> get props => [id, name];
 
-  // TODO(all): implement copyWith
-  PoralekhaViewModel copyWith({
-    List<PoralekhaModel>? items,
-  }) {
-    return  PoralekhaViewModel(
-        items: items ?? this.items,
-      );
-  }
 }

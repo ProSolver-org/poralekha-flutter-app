@@ -1,19 +1,20 @@
 import 'dart:async';
-import 'package:poralekha_flutter_app/poralekha/index.dart';
 
 class PoralekhaProvider {
-  Future<List<PoralekhaModel>?> fetchAsync(String? id) async {
-    if (id == null) {
-      return null;
-    }
-    return [PoralekhaModel(name: id)];
+  Future<void> loadAsync(String token) async {
+    /// write from keystore/keychain
+    await Future.delayed(Duration(seconds: 2));
   }
 
-  Future<List<PoralekhaModel>?> addMore(List<PoralekhaModel>? now) async {
-    final result = [
-      ...(now ?? <PoralekhaModel>[]),
-      PoralekhaModel(name: now?.length.toString() ?? '0')
-    ];
-    return result;
+  Future<void> saveAsync(String token) async {
+    /// write from keystore/keychain
+    await Future.delayed(Duration(seconds: 2));
+  }
+
+  void test(bool isError) {
+    if (isError == true){
+      throw Exception('manual error');
+    }
   }
 }
+

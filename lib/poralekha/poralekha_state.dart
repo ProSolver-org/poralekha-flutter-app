@@ -1,16 +1,42 @@
-import 'package:ff_bloc/ff_bloc.dart';
+import 'package:equatable/equatable.dart';
 
-import 'package:poralekha_flutter_app/poralekha/index.dart';
-
-class PoralekhaState extends FFState<PoralekhaState, PoralekhaViewModel> {
-  const PoralekhaState({
-    super.version = 0,
-    super.isLoading = false,
-    super.data,
-    super.error,
-  });
+abstract class PoralekhaState extends Equatable {
+  PoralekhaState();
 
   @override
-  StateCopyFactory<PoralekhaState, PoralekhaViewModel> getCopyFactory() =>
-      PoralekhaState.new;
+  List<Object> get props => [];
+}
+
+/// UnInitialized
+class UnPoralekhaState extends PoralekhaState {
+
+  UnPoralekhaState();
+
+  @override
+  String toString() => 'UnPoralekhaState';
+}
+
+/// Initialized
+class InPoralekhaState extends PoralekhaState {
+  InPoralekhaState(this.hello);
+  
+  final String hello;
+
+  @override
+  String toString() => 'InPoralekhaState $hello';
+
+  @override
+  List<Object> get props => [hello];
+}
+
+class ErrorPoralekhaState extends PoralekhaState {
+  ErrorPoralekhaState(this.errorMessage);
+ 
+  final String errorMessage;
+  
+  @override
+  String toString() => 'ErrorPoralekhaState';
+
+  @override
+  List<Object> get props => [errorMessage];
 }
