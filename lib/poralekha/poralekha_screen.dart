@@ -40,7 +40,7 @@ class PoralekhaScreenState extends State<PoralekhaScreen> {
           PoralekhaState currentState,
         ) {
           if (currentState is UnPoralekhaState) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }

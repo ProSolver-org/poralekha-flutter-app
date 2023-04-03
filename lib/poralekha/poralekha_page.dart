@@ -15,7 +15,7 @@ class _PoralekhaPageState extends State<PoralekhaPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Poralekha'),
+        title: const Text('Poralekha'),
       ),
       body: PoralekhaScreen(poralekhaBloc: _poralekhaBloc),
     );
