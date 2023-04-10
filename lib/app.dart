@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:poralekha_flutter_app/authentication/authentication.dart';
 import 'package:poralekha_flutter_app/home/home.dart';
 import 'package:poralekha_flutter_app/login/login.dart';
+import 'package:poralekha_flutter_app/mcq/mcq.dart';
 import 'package:poralekha_flutter_app/splash/splash.dart';
 import 'package:user_repository/user_repository.dart';
 
@@ -61,31 +62,35 @@ class _AppViewState extends State<AppView> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      navigatorKey: _navigatorKey,
-      builder: (context, child) {
-        return BlocListener<AuthenticationBloc, AuthenticationState>(
-          listener: (context, state) {
-            switch (state.status) {
-              case AuthenticationStatus.authenticated:
-                _navigator.pushAndRemoveUntil<void>(
-                  HomePage.route(),
-                  (route) => false,
-                );
-                break;
-              case AuthenticationStatus.unauthenticated:
-                _navigator.pushAndRemoveUntil<void>(
-                  LoginPage.route(),
-                  (route) => false,
-                );
-                break;
-              case AuthenticationStatus.unknown:
-                break;
-            }
-          },
-          child: child,
-        );
-      },
-      onGenerateRoute: (_) => SplashPage.route(),
-    );
+        navigatorKey: _navigatorKey,
+        builder: (context, child) {
+          return BlocListener<AuthenticationBloc, AuthenticationState>(
+            listener: (context, state) {
+              switch (state.status) {
+                case AuthenticationStatus.authenticated:
+                  _navigator.pushAndRemoveUntil<void>(
+                    HomePage.route(),
+                    (route) => false,
+                  );
+                  break;
+                case AuthenticationStatus.unauthenticated:
+                  _navigator.pushAndRemoveUntil<void>(
+                    //LoginPage.route(),
+                    McqPage.route(),
+                    (route) => false,
+                  );
+                  break;
+                case AuthenticationStatus.unknown:
+                  break;
+              }
+            },
+            child: child,
+          );
+        },
+        //onGenerateRoute: (_) => SplashPage.route(),
+        routes: {
+          '/': (context) => const McqPage(),
+        },
+        initialRoute: '/');
   }
 }
